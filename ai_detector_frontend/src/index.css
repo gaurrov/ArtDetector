@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #0d1117;
+  color: #eceef2;
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* App background: layered gradients + subtle grid */
+.app-bg {
+  background-color: #0d1117;
+  background-image:
+    radial-gradient(800px circle at 12% -5%, rgba(6, 208, 180, 0.14), transparent 55%),
+    radial-gradient(700px circle at 110% 0%, rgba(59, 130, 246, 0.10), transparent 50%),
+    radial-gradient(900px circle at 50% 120%, rgba(6, 208, 180, 0.08), transparent 60%);
+}
+
+.app-grid::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at 50% 0%, black 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Custom scrollbar */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.15);
+  background-clip: content-box;
+}
+
+@layer components {
+  .input {
+    @apply w-full rounded-xl border border-ink-700 bg-ink-900/60 px-4 py-3 text-sm text-ink-100 placeholder:text-ink-500 outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-500/30;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-brand-500 px-5 py-3 text-sm font-semibold text-ink-950 transition hover:bg-brand-400 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-ink-700 bg-ink-900/40 px-5 py-3 text-sm font-medium text-ink-200 transition hover:border-ink-600 hover:bg-ink-800/60 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .card {
+    @apply rounded-2xl border border-ink-800 bg-ink-900/60 backdrop-blur-sm;
+  }
+}
