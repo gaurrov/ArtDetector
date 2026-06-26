@@ -13,14 +13,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     let mounted = true;
 
+    // On mount, get the current session from Supabase storage
     supabase.auth.getSession().then(({ data, error }) => {
-      if (error) console.error('getSession error:', error.message);
+      if (error) {
+        console.error('getSession error:', error.message);
+        // If session is broken/expired, clear it so we land on login
+        supabase.auth.signOut();
+      }
       if (!mounted) return;
       setSession(data.session);
       setLoading(false);
     });
 
+    // Listen for auth state changes (login, logout, token refresh, etc.)
     const { data: sub } = supabase.auth.onAuthStateChange((_event, newSession) => {
+      if (!mounted) return;
       setSession(newSession);
       setLoading(false);
     });
@@ -36,16 +43,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       session,
       user: session?.user ?? null,
       loading,
+
       async signUp(email, password) {
         const { error } = await supabase.auth.signUp({ email, password });
         if (error) throw new Error(humanizeAuthError(error));
       },
+
       async signIn(email, password) {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw new Error(humanizeAuthError(error));
       },
+
       async signOut() {
-        await supabase.auth.signOut();
+        // Sign out from Supabase and clear all local storage
+        await supabase.auth.signOut({ scope: 'local' });
+        // Explicitly clear any remaining storage so next load shows login
+        localStorage.removeItem('detectorai_session');
+        // Force session state to null immediately
+        setSession(null);
       },
     }),
     [session, loading]

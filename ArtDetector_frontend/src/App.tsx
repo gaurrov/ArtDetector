@@ -7,6 +7,7 @@ import { Loader2, ScanEye } from 'lucide-react';
 function Gate() {
   const { user, loading } = useAuth();
 
+  // Show a full-screen loader while Supabase resolves the session
   if (loading) {
     return (
       <div className="app-bg app-grid relative flex min-h-screen items-center justify-center">
@@ -15,11 +16,13 @@ function Gate() {
             <ScanEye size={22} className="text-ink-950" />
           </div>
           <Loader2 size={20} className="animate-spin text-ink-400" />
+          <p className="text-xs text-ink-500">Loading…</p>
         </div>
       </div>
     );
   }
 
+  // No session → login page. Active session → dashboard.
   return user ? <Dashboard /> : <AuthPage />;
 }
 

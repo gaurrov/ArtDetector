@@ -264,6 +264,33 @@ def _other_label(class_names: list, exclude: str) -> str:
             return name
     return class_names[0]
 
+@app.post("/debug/predict")
+async def debug_predict(file: UploadFile = File(...)):
+    """Temporary debug endpoint — remove before deploying publicly."""
+    import io
+    from PIL import Image
+    raw_bytes = await file.read()
+    img = Image.open(io.BytesIO(raw_bytes))
+    detector = get_detector()
+    
+    # Get raw probabilities before threshold
+    import torch
+    img_rgb = img.convert("RGB")
+    from app.model import TRANSFORM, DEVICE
+    tensor = TRANSFORM(img_rgb).unsqueeze(0).to(DEVICE)
+    with torch.no_grad():
+        logits = detector.model(tensor)
+        probs = torch.softmax(logits, dim=1)[0].cpu().tolist()
+    
+    raw = {detector.class_names[i]: round(probs[i], 4) for i in range(len(detector.class_names))}
+    result = detector.predict_pil(img)
+    
+    return {
+        "raw_probabilities": raw,
+        "after_threshold": result,
+        "class_names": detector.class_names,
+        "threshold_used": 0.60,
+    }
 
 if __name__ == "__main__":
     import uvicorn

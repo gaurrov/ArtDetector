@@ -37,13 +37,13 @@ export function AuthPage() {
         <div className="relative flex items-center gap-2.5">
           <BrandLogo />
           <span className="font-display text-lg font-700 tracking-tight text-white">
-            DetectorAi
+            ArtDetector
           </span>
         </div>
 
         <div className="relative max-w-md">
           <h1 className="font-display text-4xl font-800 leading-tight text-white">
-            See past the synthetic.
+            Is it art or algorithm?
           </h1>
           <p className="mt-4 text-base leading-relaxed text-ink-300">
             Upload an image or video and get an instant, AI-powered verdict on whether
@@ -52,9 +52,9 @@ export function AuthPage() {
 
           <ul className="mt-8 space-y-3">
             {[
-              'Image & video analysis in one place',
+              'Artwork & digital art analysis',
               'Per-class confidence breakdown',
-              'Private, secure detection history',
+              'Instant AI art detection',
             ].map((f) => (
               <li key={f} className="flex items-center gap-3 text-sm text-ink-300">
                 <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brand-500/15 text-brand-400">
@@ -67,7 +67,7 @@ export function AuthPage() {
         </div>
 
         <p className="relative text-xs text-ink-600">
-          © {new Date().getFullYear()} DetectorAi · Detection powered by your model.
+          © {new Date().getFullYear()} ArtDetector · Detection powered by your model.
         </p>
       </div>
 
@@ -77,7 +77,7 @@ export function AuthPage() {
           {/* Mobile brand */}
           <div className="mb-8 flex items-center gap-2.5 lg:hidden">
             <BrandLogo />
-            <span className="font-display text-lg font-700 text-white">DetectorAi</span>
+            <span className="font-display text-lg font-700 text-white">ArtDetector</span>
           </div>
 
           <h2 className="font-display text-2xl font-700 text-white">
@@ -85,8 +85,9 @@ export function AuthPage() {
           </h2>
           <p className="mt-1.5 text-sm text-ink-400">
             {mode === 'login'
-              ? 'Sign in to run detections on your media.'
-              : 'Sign up to start detecting AI-generated media.'}
+              ? 'Sign in to analyze artwork.'
+              : 'Sign up to start detecting AI-generated art.'
+}
           </p>
 
           {error && (

@@ -49,8 +49,8 @@ export function ResultPanel({ result, mediaType, fileName }: ResultPanelProps) {
             </h3>
             <p className="mt-1 text-sm text-ink-400">
               {is_ai_generated
-                ? 'This media is likely AI-generated.'
-                : 'This media is likely authentic.'}{' '}
+                ? 'This artwork is likely AI-generated.'
+                : 'This artwork appears to be human-made.'}{' '}
               <span className="text-ink-500">{truncate(fileName, 28)}</span>
             </p>
           </div>

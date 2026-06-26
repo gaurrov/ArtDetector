@@ -11,9 +11,10 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
-    persistSession: false,
+    persistSession: true,      // keep session in localStorage across refreshes
     autoRefreshToken: true,
     detectSessionInUrl: true,
+    storageKey: 'detectorai_session', // unique key so it doesn't clash with other apps
   },
 });
 

@@ -56,7 +56,7 @@ export function Dashboard() {
               <ScanEye size={18} className="text-ink-950" />
             </div>
             <span className="font-display text-lg font-700 tracking-tight text-white">
-              DetectorAi
+              ArtDetector
             </span>
           </div>
 
@@ -111,8 +111,8 @@ export function Dashboard() {
                 </h2>
                 <p className="mt-1 text-sm text-ink-400">
                   {tab === 'image'
-                    ? 'Upload an image to detect whether it was AI-generated.'
-                    : 'Upload a video to detect whether it was AI-generated.'}
+                    ? 'Upload artwork to detect whether it was AI-generated.'
+                    : 'Upload a video to detect whether the artwork was AI-generated.'}
                 </p>
               </div>
               <MediaUploader
@@ -136,7 +136,7 @@ export function Dashboard() {
                 <div>
                   <h2 className="font-display text-xl font-700 text-white">Detection history</h2>
                   <p className="mt-1 text-sm text-ink-400">
-                    Your past detections are stored securely to your account.
+                    'Your past artwork analyses are stored securely to your account.'
                   </p>
                 </div>
                 <button

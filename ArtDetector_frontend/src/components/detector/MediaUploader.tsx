@@ -320,7 +320,7 @@ function validateFile(file: File, mediaType: MediaType): string | null {
   const rules = MEDIA_RULES[mediaType];
   const extension = file.name.split('.').pop()?.toLowerCase() ?? '';
   const hasAllowedType = file.type ? rules.types.has(file.type) : false;
-  const hasAllowedExtension = rules.extensions.includes(extension);
+  const hasAllowedExtension = (rules.extensions as readonly string[]).includes(extension);
 
   if (!hasAllowedType && !hasAllowedExtension) {
     return `Please choose a supported ${mediaType} file: ${rules.label}.`;
