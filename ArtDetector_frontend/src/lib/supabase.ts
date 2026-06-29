@@ -11,24 +11,22 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
-    persistSession: true,      // keep session in localStorage across refreshes
-    autoRefreshToken: true,
-    detectSessionInUrl: true,
-    storageKey: 'detectorai_session', // unique key so it doesn't clash with other apps
+    persistSession: true,          // save session to localStorage
+    autoRefreshToken: true,        // auto-refresh before expiry
+    detectSessionInUrl: true,      // handle email confirmation links
+    storageKey: 'artdetector_auth', // unique key to avoid conflicts
   },
 });
 
 export type ClassBreakdownItem = {
   label: string;
-  /** 0-100 */
-  probability: number;
+  probability: number; // 0-100
   is_ai?: boolean;
 };
 
 export type DetectionResult = {
   predicted_class: string;
-  /** 0-100 */
-  confidence: number;
+  confidence: number; // 0-100
   is_ai_generated: boolean;
   breakdown: ClassBreakdownItem[];
   inferred_at?: string;

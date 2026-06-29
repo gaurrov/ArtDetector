@@ -8,33 +8,30 @@ export { useAuth };
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading]  = useState(true);
 
   useEffect(() => {
     let mounted = true;
 
-    // On mount, get the current session from Supabase storage
-    supabase.auth.getSession().then(({ data, error }) => {
-      if (error) {
-        console.error('getSession error:', error.message);
-        // If session is broken/expired, clear it so we land on login
-        supabase.auth.signOut();
-      }
+    // Get current session
+    supabase.auth.getSession().then(({ data }) => {
       if (!mounted) return;
-      setSession(data.session);
+      setSession(data?.session ?? null);
       setLoading(false);
     });
 
-    // Listen for auth state changes (login, logout, token refresh, etc.)
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, newSession) => {
-      if (!mounted) return;
-      setSession(newSession);
-      setLoading(false);
-    });
+    // Listen for auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (_event, newSession) => {
+        if (!mounted) return;
+        setSession(newSession);
+        setLoading(false);
+      }
+    );
 
     return () => {
       mounted = false;
-      sub.subscription.unsubscribe();
+      subscription.unsubscribe();
     };
   }, []);
 
@@ -45,8 +42,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       loading,
 
       async signUp(email, password) {
-        const { error } = await supabase.auth.signUp({ email, password });
+        const { data, error } = await supabase.auth.signUp({ email, password });
         if (error) throw new Error(humanizeAuthError(error));
+        if (data.user && !data.session) {
+          throw new Error('Check your email and click the confirmation link to complete sign up.');
+        }
       },
 
       async signIn(email, password) {
@@ -55,11 +55,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       },
 
       async signOut() {
-        // Sign out from Supabase and clear all local storage
         await supabase.auth.signOut({ scope: 'local' });
-        // Explicitly clear any remaining storage so next load shows login
-        localStorage.removeItem('detectorai_session');
-        // Force session state to null immediately
+        sessionStorage.removeItem('logged_in_this_session');
         setSession(null);
       },
     }),
