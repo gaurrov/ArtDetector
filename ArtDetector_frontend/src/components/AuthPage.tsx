@@ -74,7 +74,7 @@ export function AuthPage() {
 
         <div className="relative flex items-center gap-2.5">
           <BrandLogo />
-          <span className="font-display text-lg font-700 tracking-tight text-white">DetectorAi</span>
+          <span className="font-display text-lg font-700 tracking-tight text-white">ArtDetector</span>
         </div>
 
         <div className="relative max-w-md">
@@ -113,7 +113,7 @@ export function AuthPage() {
           {/* Mobile brand */}
           <div className="mb-8 flex items-center gap-2.5 lg:hidden">
             <BrandLogo />
-            <span className="font-display text-lg font-700 text-white">DetectorAi</span>
+            <span className="font-display text-lg font-700 text-white">ArtDetector</span>
           </div>
 
           {/* Back button for forgot mode */}
