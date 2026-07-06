@@ -27,7 +27,7 @@ STD             = [0.229, 0.224, 0.225]
 
 # Only classify as FAKE if the fake probability exceeds this threshold.
 # Raise this value (e.g. 0.65) to reduce false positives on real images.
-FAKE_THRESHOLD  = 0.55
+FAKE_THRESHOLD  = 0.65
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 

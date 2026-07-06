@@ -54,7 +54,7 @@ ALLOWED_VIDEO_TYPES = {"video/mp4", "video/quicktime", "video/x-msvideo", "video
 MAX_IMAGE_SIZE_MB = 15
 MAX_VIDEO_SIZE_MB = 200
 NUM_VIDEO_FRAMES = 16  # fixed number of evenly-spaced frames sampled per video
-FAKE_VOTE_THRESHOLD = 0.5  # if >50% of frames are "fake", verdict is fake
+FAKE_VOTE_THRESHOLD = 0.4  # if >40% of frames are "fake", verdict is fake
 
 app = FastAPI(
     title="AI-Generated vs Real Image/Video Detector",
